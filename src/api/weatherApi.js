@@ -3,7 +3,7 @@ import envVariables from '../../envVariable';
 
 export const weatherApi = createApi({
     reducerPath : 'weatherApi',
-    baseQuery : fetchBaseQuery({baseUrl : envVariables.weatherApi}),
+    baseQuery : fetchBaseQuery({baseUrl : envVariables.weatherAPiUrl}),
     tagTypes : ['weather'],
     endpoints : (builder)=> ({
         getWeather :builder.query({
