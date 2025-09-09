@@ -4,27 +4,31 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import Button from "./Button";
+import { useSelector, useDispatch } from "react-redux";
+import {  selectTempUnit, selectWindUnit, selectPrecipitationUnit} from '../../features/unitSlice'
 
 export default function NavBar() {
+  const dispatch = useDispatch()
   const [isMetric, setMetric] = useState(true);
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [tempUnit, setTempUnit] = useState("celsius");
-  const [windUnit, setWindUnit] = useState("kmh");
-  const [precipitationUnit, setPrecipitationUnit] = useState("mm");
+  const tempUnit = useSelector(state => state.units.tempUnit);
+ const windUnit = useSelector(state => state.units.windUnit);
+ const precipitationUnit = useSelector(state => state.units.precipitationUnit)
+
   const celsiusSym = "\u2103";
-  const farenheitsym = "\u2109";
+  const fahrenheitsym = "\u2109";
 
   useEffect(()=> {
     if(isMetric === false){
-      setPrecipitationUnit('inch');
-      setTempUnit('farenheit');
-      setWindUnit('mph');
+      dispatch(selectPrecipitationUnit('inch'));
+     dispatch(selectTempUnit('fahrenheit'));
+      dispatch(selectWindUnit('mph'))
     }else{
-      setPrecipitationUnit('mm');
-      setTempUnit('celsius');
-      setWindUnit('kmh');
+      dispatch(selectPrecipitationUnit('mm'));
+     dispatch(selectTempUnit('celsius'));
+      dispatch(selectWindUnit('kmh'))
     }
-  },[isMetric, setPrecipitationUnit,setTempUnit,setWindUnit])
+  },[isMetric, dispatch])
 
   useEffect(()=> {
     
@@ -69,12 +73,12 @@ export default function NavBar() {
                 <Button
                   text={`Celsius(${celsiusSym})`}
                   isActive={tempUnit === "celsius" }
-                  onClick={()=> setTempUnit('celsius')}
+                  onClick={()=> dispatch(selectTempUnit('celsius'))}
                 ></Button>
                 <Button
-                  text={`Farenheit(${farenheitsym})`}
-                  isActive={tempUnit === "farenheit" }
-                  onClick={()=> setTempUnit('farenheit')}
+                  text={`Fahrenheit(${fahrenheitsym})`}
+                  isActive={tempUnit === "fahrenheit" }
+                  onClick={()=> dispatch(selectTempUnit('fahrenheit'))}
                 ></Button>
               </div>
             </div>
@@ -87,12 +91,12 @@ export default function NavBar() {
                 <Button
                   text={"km/h"}
                   isActive={windUnit === "kmh" }
-                  onClick={()=> setWindUnit('kmh')}
+                  onClick={()=> dispatch(selectWindUnit('kmh'))}
                 ></Button>
                 <Button
                   text={"mph"}
                   isActive={windUnit === "mph" }
-                  onClick={()=> setWindUnit('mph')}
+                  onClick={()=> dispatch(selectWindUnit('mph'))}
                 ></Button>
               </div>
             </div>
@@ -105,12 +109,12 @@ export default function NavBar() {
                 <Button
                   text={"Millimeter(mm)"}
                   isActive={precipitationUnit === "mm" }
-                    onClick={()=> setPrecipitationUnit('mm')}
+                    onClick={()=> dispatch(selectPrecipitationUnit('mm'))}
                 ></Button>
                 <Button
                   text={"Inches(in)"}
                   isActive={precipitationUnit === "inch" }
-                  onClick={()=> setPrecipitationUnit('inch')}
+                  onClick={()=> dispatch(selectPrecipitationUnit('inch'))}
                 ></Button>
               </div>
             </div>
