@@ -1,13 +1,17 @@
-
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react'
 import { useGetLocationBySearchQuery } from '../api/geoCodeApi';
 import { useGetWeatherQuery } from '../api/weatherApi';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 
 export default function useWeatherData() {
   const [search, setSearch] = useState('');
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [geoLocation, setGeoLocation] = useState(null);
+ const tempUnit = useSelector(state => state.units.tempUnit);
+ const windSpeedUnit = useSelector(state => state.units.windUnit);
+ const precipitationUnit = useSelector(state => state.units.precipitationUnit)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -27,15 +31,33 @@ export default function useWeatherData() {
   const { data: searchData, isLoading: isSearching, error: searchError } = useGetLocationBySearchQuery(search, { skip: !search });
 
   const activeLocation = selectedLocation ?? geoLocation
-  const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError } = useGetWeatherQuery(activeLocation ?? {},
-    { skip: !activeLocation })
+  const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError } = useGetWeatherQuery(
+    activeLocation ?
+    {
+      latitude: activeLocation.latitude,
+      longitude : activeLocation.longitude, 
+      pUnit : precipitationUnit, 
+      tUnit : tempUnit, 
+      wsUnit : windSpeedUnit
+    }
+    : skipToken
+    )
 
 
   useEffect(() => {
     console.log(weatherData);
   }, [search, searchData, weatherData, weatherDataError])
 
-  return { setSearch, search, searchData, isSearching, searchError, weatherData, weatherDataError, isWeatherLoading, setSelectedLocation, geoLocation }
+  return { setSearch, 
+    search, 
+    searchData, 
+    isSearching, 
+    searchError, 
+    weatherData, 
+    weatherDataError, 
+    isWeatherLoading, 
+    setSelectedLocation, 
+    geoLocation }
 }
 
 
