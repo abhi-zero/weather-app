@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react'
 import { useGetLocationBySearchQuery } from '../api/geoCodeApi';
 import { useGetWeatherQuery } from '../api/weatherApi';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { useReverseGeoCodeQuery } from '../api/reverseGeoCodeApi';
+import { setLocationName } from '../features/reverseGeocodeSlice';
+import { useDispatch } from 'react-redux';
 
 
 export default function useWeatherData() {
@@ -12,6 +15,7 @@ export default function useWeatherData() {
  const tempUnit = useSelector(state => state.units.tempUnit);
  const windSpeedUnit = useSelector(state => state.units.windUnit);
  const precipitationUnit = useSelector(state => state.units.precipitationUnit)
+ const dispatch = useDispatch();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -28,6 +32,8 @@ export default function useWeatherData() {
       )
     }
   }, [])
+
+ 
   const { data: searchData, isLoading: isSearching, error: searchError } = useGetLocationBySearchQuery(search, { skip: !search });
 
   const activeLocation = selectedLocation ?? geoLocation
@@ -42,11 +48,25 @@ export default function useWeatherData() {
     }
     : skipToken
     )
-
+ const {data: revereData, isLoading: isReversing, error : reverseError} = useReverseGeoCodeQuery(activeLocation, {skip: !activeLocation})
+  useEffect(()=> {
+    dispatch(setLocationName({
+      name: revereData?.features[0].properties.name,
+      city: revereData?.features[0].properties.city,
+      cityState: revereData?.features[0].properties.state,
+      country: revereData?.features[0].properties.country
+    }))
+  },[revereData,dispatch])
+  const location = useSelector(state => state.reverseGeoCode)
 
   useEffect(() => {
     console.log(weatherData);
-  }, [search, searchData, weatherData, weatherDataError])
+    console.log(searchData);
+    console.log(revereData);
+    console.log(location);
+    
+    
+  }, [ weatherData,searchData, revereData, location])
 
   return { setSearch, 
     search, 
