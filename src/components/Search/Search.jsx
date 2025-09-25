@@ -25,7 +25,7 @@ export default function Search({
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex md:flex-row flex-col justify-between gap-5 px-5 md:w-[600px]"
+          className="flex md:flex-row flex-col justify-between gap-4 md:gap-5 px-5 md:w-[600px]"
         >
           <div className="relative w-full">
             <div className="top-[50%] left-0 absolute text-neutral-50 text-2xl -translate-y-1/2 translate-1/2">
