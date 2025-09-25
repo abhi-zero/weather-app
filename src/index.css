@@ -68,6 +68,11 @@
   /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
+html,body{
+  font-family: "DM Sans", sans-serif;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 
 @theme {
   --color-neutral-900: hsl(243, 96%, 9%);
@@ -80,8 +85,20 @@
 
   /* blue color */
   --color-blue-500: hsl(233, 67%, 56%);
---color-bgBlue-700: hsl(248, 70%, 36%);
+  --color-blue-700: hsl(248, 70%, 36%);
 
  /* orange */
   --color-orange-500: hsl(28, 100%, 52%);
+
+
+  /* font family */
+  --font-dmserif : 'DM Sans';
+  --font-bg : "Bricolage Grotesque";
+
+  /* hero image for current weather component */
+  --background-hero-desktop: url('/images/bg-today-large.svg');
+  --background-hero-mobile: url('/images/bg-today-small.svg');
+
 }
+
+
