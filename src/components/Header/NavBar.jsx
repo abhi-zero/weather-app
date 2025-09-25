@@ -53,7 +53,7 @@ export default function NavBar() {
             <span>{isDialogOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
           </button>
           {/* menu for units */}
-          <div className={`opacity-0 scale-75 ${isDialogOpen ? 'opacity-100 scale-100' : ''} transition-all duration-300 ease-in-out top-[120%] -translate-x-[100%] left-full absolute`}>
+          <div className={` ${isDialogOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-35'} origin-top-right transition-all duration-300 ease-in-out top-[120%] -translate-x-[100%] left-full absolute`}>
             {isDialogOpen &&  <div
           
           className={` flex flex-col gap-1 bg-neutral-700 px-3 py-2.5 rounded-[14px] text-neutral-0  unit-menu `}>
