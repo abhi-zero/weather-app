@@ -14,7 +14,6 @@ export default function CurrentWeather({
 
   // useeffect for setting loading true or false
   useEffect(() => {
-    console.log(weatherData?.current?.temperature_2m);
     if (location.name === undefined || location.country === undefined) {
       setLoading(true);
     } else {
@@ -22,8 +21,7 @@ export default function CurrentWeather({
     }
   }, [weatherData, setLoading, location.name, location.country]);
 
-  const {currentFullDate} = useDate();
-
+  const {currentFullDate } = useDate();
 
   return (
     <div
@@ -41,7 +39,9 @@ export default function CurrentWeather({
                 </>
               )}
             </h1>
-            <p className="font-medium text-[18px] text-white">{currentFullDate}</p>
+            <p className="font-medium text-[18px] text-white">
+              {currentFullDate}
+            </p>
           </div>
           <div className="flex items-center">
             <div className="w-[120px] h-[120px]">
@@ -54,9 +54,11 @@ export default function CurrentWeather({
                   ? "-- --"
                   : weatherDataError
                   ? "Error"
-                  : `${weatherData?.current?.temperature_2m
-                      .toString()
-                      .split('.')[0]}\u00B0`}
+                  : `${
+                      weatherData?.current?.temperature_2m
+                        .toString()
+                        .split(".")[0]
+                    }\u00B0`}
               </h1>
             </div>
           </div>
