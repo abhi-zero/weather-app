@@ -67,11 +67,42 @@
   src: url("../src/assets/fonts/dm-sans-v16-latin-700.woff2") format("woff2");
   /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+:root{
+  --color-neutral-900: hsl(243, 96%, 9%);
+  --color-neutral-800: hsl(243, 27%, 20%);
+  --color-neutral-700: hsl(243, 23%, 24%);
+  --color-neutral-600: hsl(243, 23%, 30%);
+  --color-neutral-300: hsl(240, 6%, 70%);
+  --color-neutral-200: hsl(250, 6%, 84%);
+  --color-neutral-0: hsl(0, 0%, 100%);
 
+  /* blue color */
+  --color-blue-500: hsl(233, 67%, 56%);
+  --color-blue-700: hsl(248, 70%, 36%);
+
+ /* orange */
+  --color-orange-500: hsl(28, 100%, 52%);
+
+
+  /* font family */
+  --font-dmserif : 'DM Sans';
+  --font-bg : "Bricolage Grotesque";
+}
 html,body{
   font-family: "DM Sans", sans-serif;
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+.scroll-section::-webkit-scrollbar{
+  width: 4px;
+  background-color:  var(--color-neutral-800);
+}
+
+
+.scroll-section::-webkit-scrollbar-thumb{
+  background-color: var(--color-neutral-600);
+  border-radius: 9999px;
 }
 
 @theme {
