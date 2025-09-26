@@ -1,6 +1,5 @@
 import checkmark from "../../assets/images/icon-checkmark.svg";
 
-console.log("checkmark import:", checkmark);
 export default function Button({ text, isActive ,onClick}) {
   return (
     <div>
