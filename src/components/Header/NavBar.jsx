@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.svg";
 import { IoSettingsSharp } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
 import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
 import {  selectTempUnit, selectWindUnit, selectPrecipitationUnit} from '../../features/unitSlice'
+import DropDownButton from "../DropdownButton/DropDownButton";
 
 export default function NavBar() {
   const dispatch = useDispatch()
@@ -42,16 +42,15 @@ export default function NavBar() {
         </div>
         <div className="relative w-fit h-full">
           {/* unit button */}
-          <button
-            onClick={() => setDialogOpen(!isDialogOpen)}
-            className="flex items-center-safe gap-1 bg-neutral-700 px-2.5 py-1.5 rounded-[7px] font-medium text-neutral-0 cursor-pointer"
-          >
-            <span>
-              <IoSettingsSharp />
-            </span>{" "}
-            <span className="hidden sm:block">Units</span>{" "}
-            <span>{isDialogOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
-          </button>
+          
+          <DropDownButton 
+          setDialogOpen={setDialogOpen}
+          isDialogOpen={isDialogOpen}
+          icon={<IoSettingsSharp />}
+          iconArrow={<IoIosArrowDown />}
+          label={"Units"}
+          />
+
           {/* menu for units */}
           <div className={` ${isDialogOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-35'} origin-top-right transition-all duration-300 ease-in-out top-[120%] -translate-x-[100%] left-full absolute`}>
             {isDialogOpen &&  <div
