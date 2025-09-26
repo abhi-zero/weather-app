@@ -4,14 +4,23 @@ import useWeatherData from "../hooks/useWeatherData";
 import useDate from "../hooks/useDate/useDate";
 import WeatherDetail from "./WeatherDetail/WeatherDetail";
 import DailyForecast from "./DailyForecast/DailyForecast";
+import useGroupHourlyByDay from "../hooks/useGroupHourlyByDay/useGroupHourlyByDay";
+import HourlyWeather from "./HourlyWeather/HourlyWeather";
+
 export default function WeatherLayout() {
   const { weatherData, weatherDataError, isWeatherLoading } = useWeatherData();
+
   const [isLoading, setLoading] = useState(false);
 
   const { getShortDayFromIndex } = useDate();
+
+  const days = weatherData?.hourly
+    ? useGroupHourlyByDay(weatherData.hourly)
+    : [];
+
   return (
-    <div>
-      <div className="m-auto px-[16px] md:px-[20px] max-w-[1300px]">
+    <div className="m-auto px-[16px] md:px-[20px] max-w-[1300px]">
+      <div className="flex lg:flex-row flex-col gap-8">
         <div className="flex flex-col gap-8 lg:gap-12">
           <div>
             <div>
@@ -59,33 +68,34 @@ export default function WeatherLayout() {
             </div>
 
             <ul className="md:flex gap-4 grid grid-cols-[repeat(auto-fit,minmax(103.66px,1fr))]">
-              {isWeatherLoading ? (
-               Array.from({length : 7}).map((_,i)=> (
-                  <li key={i}>
-                  <DailyForecast  
-                    weekday={"---"}
-                    weatherCode={""}
-                    isWeatherLoading={isWeatherLoading}
-                    unitSuffix={""}
-                  />
-                </li> 
-              ))
-              ) : (
-                weatherData?.daily?.weather_code.map((code, i) => (
-                  <li key={`${code}-${i}`}>
-                    <DailyForecast
-                      weekday={getShortDayFromIndex(i)}
-                      weatherCode={weatherData?.daily?.weather_code[i]}
-                      maxValue={weatherData?.daily?.temperature_2m_max[i]}
-                      minValue={weatherData?.daily?.temperature_2m_min[i]}
-                      isWeatherLoading={isWeatherLoading}
-                      unitSuffix={"\u00B0"}
-                    />
-                  </li>
-                ))
-              )}
+              {isWeatherLoading
+                ? Array.from({ length: 7 }).map((_, i) => (
+                    <li key={i}>
+                      <DailyForecast
+                        weekday={"---"}
+                        weatherCode={""}
+                        isWeatherLoading={isWeatherLoading}
+                        unitSuffix={""}
+                      />
+                    </li>
+                  ))
+                : weatherData?.daily?.weather_code.map((code, i) => (
+                    <li key={`${code}-${i}`}>
+                      <DailyForecast
+                        weekday={getShortDayFromIndex(i)}
+                        weatherCode={weatherData?.daily?.weather_code[i]}
+                        maxValue={weatherData?.daily?.temperature_2m_max[i]}
+                        minValue={weatherData?.daily?.temperature_2m_min[i]}
+                        isWeatherLoading={isWeatherLoading}
+                        unitSuffix={"\u00B0"}
+                      />
+                    </li>
+                  ))}
             </ul>
           </div>
+        </div>
+        <div className="w-full">
+          <HourlyWeather days={days} isWeatherLoading={isWeatherLoading} />
         </div>
       </div>
     </div>
