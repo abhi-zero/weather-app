@@ -12,10 +12,10 @@ export default function useWeatherData() {
   const [search, setSearch] = useState('');
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [geoLocation, setGeoLocation] = useState(null);
- const tempUnit = useSelector(state => state.units.tempUnit);
- const windSpeedUnit = useSelector(state => state.units.windUnit);
- const precipitationUnit = useSelector(state => state.units.precipitationUnit)
- const dispatch = useDispatch();
+  const tempUnit = useSelector(state => state.units.tempUnit);
+  const windSpeedUnit = useSelector(state => state.units.windUnit);
+  const precipitationUnit = useSelector(state => state.units.precipitationUnit)
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -33,51 +33,45 @@ export default function useWeatherData() {
     }
   }, [])
 
- 
+
   const { data: searchData, isLoading: isSearching, error: searchError } = useGetLocationBySearchQuery(search, { skip: !search });
 
   const activeLocation = selectedLocation ?? geoLocation
   const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError } = useGetWeatherQuery(
     activeLocation ?
-    {
-      latitude: activeLocation.latitude,
-      longitude : activeLocation.longitude, 
-      pUnit : precipitationUnit, 
-      tUnit : tempUnit, 
-      wsUnit : windSpeedUnit
-    }
-    : skipToken
-    )
- const {data: revereData, isLoading: isReversing, error : reverseError} = useReverseGeoCodeQuery(activeLocation, {skip: !activeLocation})
-  useEffect(()=> {
+      {
+        latitude: activeLocation.latitude,
+        longitude: activeLocation.longitude,
+        pUnit: precipitationUnit,
+        tUnit: tempUnit,
+        wsUnit: windSpeedUnit
+      }
+      : skipToken
+  )
+  const { data: revereData, isLoading: isReversing, error: reverseError } = useReverseGeoCodeQuery(activeLocation, { skip: !activeLocation })
+  useEffect(() => {
     dispatch(setLocationName({
       name: revereData?.features[0].properties.name,
       city: revereData?.features[0].properties.city,
       cityState: revereData?.features[0].properties.state,
       country: revereData?.features[0].properties.country
     }))
-  },[revereData,dispatch])
-  const location = useSelector(state => state.reverseGeoCode)
+  }, [revereData, dispatch])
 
-  useEffect(() => {
-    console.log(weatherData);
-    console.log(searchData);
-    console.log(revereData);
-    console.log(location);
-    
-    
-  }, [ weatherData,searchData, revereData, location])
 
-  return { setSearch, 
-    search, 
-    searchData, 
-    isSearching, 
-    searchError, 
-    weatherData, 
-    weatherDataError, 
-    isWeatherLoading, 
-    setSelectedLocation, 
-    geoLocation }
+
+  return {
+    setSearch,
+    search,
+    searchData,
+    isSearching,
+    searchError,
+    weatherData,
+    weatherDataError,
+    isWeatherLoading,
+    setSelectedLocation,
+    geoLocation
+  }
 }
 
 
