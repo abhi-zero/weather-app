@@ -54,7 +54,7 @@ export default function Search({
         <h2>error.status</h2>
       ) : (
         search !== "" && (
-          <div className="z-50 bg-neutral-800 shadow-neutral-950 shadow-xl mx-5 mt-3 p-2 rounded-2xl md:w-[415px] text-neutral-100">
+          <div className="z-50 absolute bg-neutral-800 shadow-neutral-950 shadow-xl mx-5 mt-3 p-2 rounded-2xl md:w-[415px] text-neutral-100">
             <ul>
               {isLoading || (search.length > 0 && search.length < 2)  ? (
                 <li className="hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] cursor-pointer">Loading..</li>

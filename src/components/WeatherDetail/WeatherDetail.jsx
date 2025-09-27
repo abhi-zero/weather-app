@@ -4,7 +4,7 @@ export default function WeatherDetail({ label, value ,isWeatherLoading, unitSuff
 
   return (
     <div>
-      <div className="flex flex-col gap-6 bg-neutral-800 p-[20px] rounded-xl md:w-[165px] lg:w-[182px] min-w-[163px] lg:h-[118px]">
+      <div className="flex flex-col gap-6 bg-neutral-800 p-[20px] rounded-xl lg:w-[182px] min-w-[163px] lg:h-[118px]">
         <div>
           <h1 className="font-medium text-[18px] text-neutral-200 leading-[120%]">{label}</h1>
         </div>

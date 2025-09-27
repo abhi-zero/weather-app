@@ -14,7 +14,7 @@ export default function HourlyWeather({ days, isWeatherLoading }) {
   const [selectDay, setSelectDay] = useState(getLongDay());
 
   return (
-    <div className="bg-neutral-800 py-6 rounded-xl min-w-[285px] min-h-[700px]">
+    <div className="bg-neutral-800 py-6 rounded-xl min-w-[285px] lg:max-w-[428px] min-h-[700px]">
       <div>
         <div className="flex justify-between items-center-safe gap-2 px-6">
           <div >

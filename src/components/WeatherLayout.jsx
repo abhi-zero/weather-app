@@ -22,7 +22,7 @@ export default function WeatherLayout() {
     <div className="m-auto px-[16px] md:px-[20px] max-w-[1300px]">
       <div className="flex lg:flex-row flex-col gap-8">
         <div className="flex flex-col gap-8 lg:gap-12">
-          <div>
+          <div className="">
             <div>
               <CurrentWeather
                 weatherData={weatherData}
@@ -33,7 +33,7 @@ export default function WeatherLayout() {
               />
             </div>
 
-            <div className="md:flex gap-5 lg:gap-6 grid grid-cols-[repeat(auto-fit,minmax(163px,1fr))] mt-5 lg:mt-8">
+            <div className="lg:flex lg:flex-wrap xl:flex-nowrap gap-5 lg:gap-6 grid grid-cols-[repeat(auto-fit,minmax(163px,1fr))] mt-5 lg:mt-8">
               <WeatherDetail
                 label={"Feels Like"}
                 value={weatherData?.current?.apparent_temperature}
@@ -67,8 +67,8 @@ export default function WeatherLayout() {
               </h2>
             </div>
 
-            <ul className="md:flex gap-4 grid grid-cols-[repeat(auto-fit,minmax(103.66px,1fr))]">
-              {isWeatherLoading
+            <ul className="lg:flex lg:flex-wrap xl:flex-nowrap gap-4 grid grid-cols-[repeat(auto-fit,minmax(103.66px,1fr))] lg:max-w-[800px]">
+              {isWeatherLoading || !weatherData
                 ? Array.from({ length: 7 }).map((_, i) => (
                     <li key={i}>
                       <DailyForecast
