@@ -130,6 +130,27 @@ html,body{
   --background-hero-desktop: url('/images/bg-today-large.svg');
   --background-hero-mobile: url('/images/bg-today-small.svg');
 
-}
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+      animation-timing-function:ease-in-out;
+    }
+    50% {
+      transform: translateY(-150%);
+      animation-timing-function: ease-in-out;
+    }
+  };
+
+   
+};
+
+
+@utility animate-bounce{
+    animation: bounce 1s  infinite;
+  }
+@utility animation-delay-0   { animation-delay: 0ms }
+@utility animation-delay-200 { animation-delay: 200ms }
+@utility animation-delay-400 { animation-delay: 400ms }
+@utility animation-delay-600 { animation-delay: 600ms }
 
 
