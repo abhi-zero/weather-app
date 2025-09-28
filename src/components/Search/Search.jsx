@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IoSearch } from "react-icons/io5";
 
@@ -56,8 +56,10 @@ export default function Search({
         search !== "" && (
           <div className="z-50 absolute bg-neutral-800 shadow-neutral-950 shadow-xl mx-5 mt-3 p-2 rounded-2xl md:w-[415px] text-neutral-100">
             <ul>
-              {isLoading || (search.length > 0 && search.length < 2)  ? (
+              {isLoading || (search.length > 0 && search.length < 2) ? (
                 <li className="hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] cursor-pointer">Loading..</li>
+              ) : !searchData.results ? (
+                <li className="hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] cursor-pointer">Not Found</li>
               ) : (
                 searchData?.results &&
                 searchData?.results?.map((loc) => (
