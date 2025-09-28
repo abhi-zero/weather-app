@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { IoSearch } from "react-icons/io5";
+import { FaLocationArrow } from "react-icons/fa6";
 
 export default function Search({
   setSearch,
@@ -9,6 +10,8 @@ export default function Search({
   error,
   setSelectedLocation,
   search,
+ onClick,
+ 
 }) {
   const {
     register,
@@ -25,7 +28,7 @@ export default function Search({
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex md:flex-row flex-col justify-between gap-4 md:gap-5 px-5 md:w-[600px]"
+          className="flex md:flex-row flex-col justify-between gap-4 md:gap-5 px-5 md:w-[700px]"
         >
           <div className="relative w-full">
             <div className="top-[50%] left-0 absolute text-neutral-50 text-2xl -translate-y-1/2 translate-1/2">
@@ -41,9 +44,16 @@ export default function Search({
           </div>
           <button
             type="submit"
-            className="bg-blue-700 hover:bg-blue-500 px-9 py-3 rounded-xl focus:outline-2 focus:outline-blue-700 focus:outline-offset-2 text-neutral-50 transition-all duration-300 ease-in-out cursor-pointer"
+            className="bg-blue-700 hover:bg-blue-500 px-9 py-3 rounded-xl focus:outline-2 focus:outline-blue-700 focus:outline-offset-2 min-h-[48px] text-neutral-50 transition-all duration-300 ease-in-out cursor-pointer"
           >
             Search
+          </button>
+           <button
+            type="button"
+            onClick={onClick}
+            className="flex justify-center-safe items-center-safe bg-blue-700 hover:bg-neutral-0 px-9 py-3 rounded-xl focus:outline-2 focus:outline-blue-700 focus:outline-offset-2 min-h-[48px] text-neutral-50 hover:text-blue-700 transition-all duration-300 ease-in-out cursor-pointer"
+          >
+            <span className=""><FaLocationArrow /></span>
           </button>
         </form>
         <p className="px-5 text-red-600 text-sm md:text-left text-center">
