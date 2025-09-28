@@ -28,7 +28,7 @@ export default function CurrentWeather({
       className={`lg:max-w-[800px] lg:min-w-[720px] w-full min-w-[343px]  sm:max-w-[720px] md:max-w-[100%] bg-neutral-800   rounded-3xl overflow-hidden  min-h-[286px] sm:h-[286px]`}
     >
       {isWeatherLoading || !weatherData || isLoading ? (
-        <div className="flex flex-col justify-center items-center gap-1 h-full">
+        <div className="flex flex-col justify-center items-center gap-1 h-full min-h-[286px]">
           <div className="flex justify-center items-center-safe gap-1.5">
             <div className="bg-neutral-400 rounded-full w-[10px] h-[10px] animate-bounce animation-delay-0"></div>
             <div className="bg-neutral-400 rounded-full w-[10px] h-[10px] animate-bounce animation-delay-200"></div>
