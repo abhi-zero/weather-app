@@ -2,10 +2,13 @@ import useWeatherData from "./hooks/useWeatherData";
 import WeatherLayout from "./components/WeatherLayout";
 import Search from "./components/Search/Search";
 import NavBar from "./components/Header/NavBar";
+import InstructionModal from "./components/Dialog/InstructionModal";
+import { useState } from "react";
 
 function App() {
   const {
     setSearch,
+    fetchGeoLocation,
     search,
     searchData,
     isSearching,
@@ -14,10 +17,33 @@ function App() {
     weatherData,
     weatherDataError,
     isWeatherLoading,
+    geoError
   } = useWeatherData();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function toggleInstructionModal() {
+    if(geoError){
+      setIsModalOpen(true);
+    }else{
+      setIsModalOpen(false);
+    }
+  }
+
+
+  function handleFunctions(){
+    setSelectedLocation(null);
+    fetchGeoLocation();
+    toggleInstructionModal();
+  }
+
   return (
-    <div className="flex flex-col items-center-safe bg-neutral-900 w-[100vw] min-h-screen">
+    <div className="relative flex flex-col items-center-safe bg-neutral-900 w-[100vw] min-h-screen">
+       {isModalOpen && 
+       
+        <div className="top-[15%] md:top-[30%] md:left-[50%] z-100 absolute md:-translate-x-1/2">
+       <InstructionModal setIsModalOpen={setIsModalOpen}/>
+     </div>}
       <NavBar />
       <div>
         <div className="my-[30px]">
@@ -33,6 +59,7 @@ function App() {
             setSelectedLocation={setSelectedLocation}
             setSearch={setSearch}
             search={search}
+            onClick={handleFunctions}
           />
         </div>
       </div>
