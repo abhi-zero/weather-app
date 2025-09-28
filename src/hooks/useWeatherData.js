@@ -12,25 +12,55 @@ export default function useWeatherData() {
   const [search, setSearch] = useState('');
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [geoLocation, setGeoLocation] = useState(null);
+  const [geoError, setGeoError] = useState(null);
   const [activeLocation, setActiveLocation] = useState(null);
   const tempUnit = useSelector(state => state.units.tempUnit);
   const windSpeedUnit = useSelector(state => state.units.windUnit);
   const precipitationUnit = useSelector(state => state.units.precipitationUnit)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (navigator.geolocation) {
+
+  async function fetchGeoLocation() {
+    try {
+      if (navigator.geolocation) {
+        const permission = await navigator.permissions.query({ name: 'geolocation' })
+
+        if (permission.state === 'denied') {
+          setGeoError('Geolocation permission denied.');
+          return;
+        }
+      }
+
+      console.log('main work');
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setGeoLocation({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           });
+          setGeoError(null)
         },
-        () => {
-          console.warn("Geolocation not available or denied.");
+        (error) => {
+          if (error.code === error.PERMISSION_DENIED) {
+            setGeoError("You denied location access. Please enable it in browser settings.");
+          } else {
+            setGeoError("Unable to fetch location.");
+          }
         }
       )
+    }
+    catch (error) {
+      console.error("Error fetching geolocation:", error);
+      setGeoError("An error occurred while fetching geolocation.");
+    }
+  }
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      fetchGeoLocation();
+    } else {
+      setGeoError("Geolocation is not supported by your browser.");
     }
   }, [])
 
@@ -40,22 +70,22 @@ export default function useWeatherData() {
 
   useEffect(() => {
     if (selectedLocation) {
-        if (!activeLocation || 
-        activeLocation.latitude !== Number(selectedLocation.latitude) || 
+      if (!activeLocation ||
+        activeLocation.latitude !== Number(selectedLocation.latitude) ||
         activeLocation.longitude !== Number(selectedLocation.longitude)) {
-      setActiveLocation({
-        latitude: Number(selectedLocation.latitude),
-        longitude: Number(selectedLocation.longitude),
-      });
-    }
+        setActiveLocation({
+          latitude: Number(selectedLocation.latitude),
+          longitude: Number(selectedLocation.longitude),
+        });
+      }
     } else if (geoLocation) {
-    if (!activeLocation || 
-        activeLocation.latitude !== geoLocation.latitude || 
+      if (!activeLocation ||
+        activeLocation.latitude !== geoLocation.latitude ||
         activeLocation.longitude !== geoLocation.longitude) {
-      setActiveLocation(geoLocation);
+        setActiveLocation(geoLocation);
+      }
     }
-  }
-  },[selectedLocation, geoLocation]);
+  }, [selectedLocation, geoLocation]);
 
 
   const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError } = useGetWeatherQuery(
@@ -80,10 +110,9 @@ export default function useWeatherData() {
     }))
   }, [revereData, dispatch])
 
-
-
   return {
     setSearch,
+    fetchGeoLocation,
     search,
     searchData,
     isSearching,
@@ -92,7 +121,8 @@ export default function useWeatherData() {
     weatherDataError,
     isWeatherLoading,
     setSelectedLocation,
-    geoLocation
+    geoLocation,
+    geoError
   }
-  
+
 }
