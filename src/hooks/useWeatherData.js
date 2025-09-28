@@ -40,23 +40,25 @@ export default function useWeatherData() {
 
   useEffect(() => {
     if (selectedLocation) {
+        if (!activeLocation || 
+        activeLocation.latitude !== Number(selectedLocation.latitude) || 
+        activeLocation.longitude !== Number(selectedLocation.longitude)) {
       setActiveLocation({
-        latitude: selectedLocation.latitude,
-        longitude: selectedLocation.longitude,
-      })
-    } else if (geoLocation) {
-      setActiveLocation(geoLocation);
-    } else {
-      setActiveLocation(null);
+        latitude: Number(selectedLocation.latitude),
+        longitude: Number(selectedLocation.longitude),
+      });
     }
-  }, [selectedLocation, geoLocation, dispatch]);
+    } else if (geoLocation) {
+    if (!activeLocation || 
+        activeLocation.latitude !== geoLocation.latitude || 
+        activeLocation.longitude !== geoLocation.longitude) {
+      setActiveLocation(geoLocation);
+    }
+  }
+  },[selectedLocation, geoLocation]);
 
-  useEffect(() => {
-    console.log(activeLocation);
-    
-  },[activeLocation])
 
-  const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError, refetch } = useGetWeatherQuery(
+  const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError } = useGetWeatherQuery(
     activeLocation ?
       {
         latitude: activeLocation.latitude,
@@ -67,15 +69,7 @@ export default function useWeatherData() {
       }
       : skipToken
   )
-  useEffect(()=> {
-    console.log(weatherData);
-  })
 
-  useEffect(() => {
-    if(activeLocation){
-      refetch();
-    }
-  }, [activeLocation, refetch])
   const { data: revereData } = useReverseGeoCodeQuery(activeLocation, { skip: !activeLocation })
   useEffect(() => {
     dispatch(setLocationName({
@@ -100,6 +94,5 @@ export default function useWeatherData() {
     setSelectedLocation,
     geoLocation
   }
+  
 }
-
-
