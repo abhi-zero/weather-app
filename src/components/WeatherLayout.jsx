@@ -6,7 +6,7 @@ import DailyForecast from "./DailyForecast/DailyForecast";
 import useGroupHourlyByDay from "../hooks/useGroupHourlyByDay/useGroupHourlyByDay";
 import HourlyWeather from "./HourlyWeather/HourlyWeather";
 
-export default function WeatherLayout({ weatherData, weatherDataError, isWeatherLoading }) {
+export default function WeatherLayout({ weatherData, weatherDataError, isWeatherLoading}) {
 
   const [isLoading, setLoading] = useState(false);
 
@@ -15,7 +15,7 @@ export default function WeatherLayout({ weatherData, weatherDataError, isWeather
   const days = useGroupHourlyByDay(weatherData?.hourly);
 
   return (
-    <div className="m-auto px-[16px] md:px-[20px] max-w-[1300px]">
+    <div className="relative m-auto px-[16px] md:px-[20px] max-w-[1300px]">
       <div className="flex lg:flex-row flex-col gap-8">
         <div className="flex flex-col gap-8 lg:gap-12">
           <div className="">
@@ -44,7 +44,7 @@ export default function WeatherLayout({ weatherData, weatherDataError, isWeather
               />
               <WeatherDetail
                 label={"Wind"}
-                value={weatherData?.current?.relative_humidity_2m}
+                value={weatherData?.current?.wind_speed_10m}
                 isWeatherLoading={isWeatherLoading}
                 unitSuffix={weatherData?.current_units?.wind_speed_10m}
               />
