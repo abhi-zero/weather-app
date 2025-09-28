@@ -9,6 +9,7 @@ This project is based on a challenge from [Frontend Mentor](https://www.frontend
 - **Real-time Weather Data**: Get current weather conditions for any location
 - **Location Search**: Search for cities and locations
 - **Geolocation Support**: Automatically detect and use your current location
+- **Relocate to Current Location**: Button to quickly return to your current location's weather after searching elsewhere
 - **Weather Forecasts**: View hourly and daily weather forecasts
 - **Unit Conversion**: Toggle between metric and imperial units for temperature, wind speed, and precipitation
 - **Responsive Design**: Optimized for both desktop and mobile devices
@@ -77,8 +78,9 @@ The application requires the following environment variables to be set in a `.en
 
 1. **Search for a Location**: Type in the search bar to find weather for any city
 2. **Use Current Location**: Allow location access for automatic weather detection
-3. **View Forecasts**: Scroll through hourly and daily weather predictions
-4. **Change Units**: Use the unit toggle buttons to switch between metric and imperial systems
+3. **Relocate to Current Location**: Click the location arrow button to return to your current location's weather after searching elsewhere
+4. **View Forecasts**: Scroll through hourly and daily weather predictions
+5. **Change Units**: Use the unit toggle buttons to switch between metric and imperial systems
 
 ## Scripts
 
@@ -106,11 +108,6 @@ src/
 ├── hooks/               # Custom React hooks
 └── index.css            # Global styles and Tailwind config
 ```
-
-## Future Features
-
-- **Relocate Button**: Add a button to quickly return to the current location's weather after searching for other places. This will allow users to easily switch back to their geolocation-based weather data.
-
 ## Contributing
 
 1. Fork the repository
