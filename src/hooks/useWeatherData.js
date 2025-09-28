@@ -12,6 +12,7 @@ export default function useWeatherData() {
   const [search, setSearch] = useState('');
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [geoLocation, setGeoLocation] = useState(null);
+  const [activeLocation, setActiveLocation] = useState(null);
   const tempUnit = useSelector(state => state.units.tempUnit);
   const windSpeedUnit = useSelector(state => state.units.windUnit);
   const precipitationUnit = useSelector(state => state.units.precipitationUnit)
@@ -36,8 +37,26 @@ export default function useWeatherData() {
 
   const { data: searchData, isLoading: isSearching, error: searchError } = useGetLocationBySearchQuery(search, { skip: !search });
 
-  const activeLocation = selectedLocation ?? geoLocation
-  const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError } = useGetWeatherQuery(
+
+  useEffect(() => {
+    if (selectedLocation) {
+      setActiveLocation({
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
+      })
+    } else if (geoLocation) {
+      setActiveLocation(geoLocation);
+    } else {
+      setActiveLocation(null);
+    }
+  }, [selectedLocation, geoLocation, dispatch]);
+
+  useEffect(() => {
+    console.log(activeLocation);
+    
+  },[activeLocation])
+
+  const { data: weatherData, isLoading: isWeatherLoading, error: weatherDataError, refetch } = useGetWeatherQuery(
     activeLocation ?
       {
         latitude: activeLocation.latitude,
@@ -48,7 +67,16 @@ export default function useWeatherData() {
       }
       : skipToken
   )
-  const { data: revereData, isLoading: isReversing, error: reverseError } = useReverseGeoCodeQuery(activeLocation, { skip: !activeLocation })
+  useEffect(()=> {
+    console.log(weatherData);
+  })
+
+  useEffect(() => {
+    if(activeLocation){
+      refetch();
+    }
+  }, [activeLocation, refetch])
+  const { data: revereData } = useReverseGeoCodeQuery(activeLocation, { skip: !activeLocation })
   useEffect(() => {
     dispatch(setLocationName({
       name: revereData?.features[0].properties.name,

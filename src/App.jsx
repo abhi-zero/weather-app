@@ -11,6 +11,9 @@ function App() {
     isSearching,
     searchError,
     setSelectedLocation,
+    weatherData,
+    weatherDataError,
+    isWeatherLoading,
   } = useWeatherData();
 
   return (
@@ -34,7 +37,11 @@ function App() {
         </div>
       </div>
       <div className="my-8 lg:my-12 w-full">
-        <WeatherLayout />
+        <WeatherLayout
+          weatherData={weatherData}
+          weatherDataError={weatherDataError}
+          isWeatherLoading={isWeatherLoading}
+        />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default function Search({
   } = useForm();
 
   function onSubmit(data) {
-    setSearch(data.Search);
+    setSearch(data.search);
   }
 
   return (
@@ -64,10 +64,7 @@ export default function Search({
                   <li
                     key={`${loc.longitude}-${loc.latitude}`}
                     onClick={() => {
-                      setSelectedLocation({
-                        latitude: loc.latitude,
-                        longitude: loc.longitude,
-                      });
+                      setSelectedLocation(loc);
                       setSearch("");
                     }}
                     className="flex justify-between items-center-safe hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] cursor-pointer"

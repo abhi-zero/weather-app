@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import CurrentWeather from "./CurrentWeather/CurrentWeather";
-import useWeatherData from "../hooks/useWeatherData";
 import useDate from "../hooks/useDate/useDate";
 import WeatherDetail from "./WeatherDetail/WeatherDetail";
 import DailyForecast from "./DailyForecast/DailyForecast";
 import useGroupHourlyByDay from "../hooks/useGroupHourlyByDay/useGroupHourlyByDay";
 import HourlyWeather from "./HourlyWeather/HourlyWeather";
 
-export default function WeatherLayout() {
-  const { weatherData, weatherDataError, isWeatherLoading } = useWeatherData();
+export default function WeatherLayout({ weatherData, weatherDataError, isWeatherLoading }) {
 
   const [isLoading, setLoading] = useState(false);
 
   const { getShortDayFromIndex } = useDate();
 
-  const days = weatherData?.hourly
-    ? useGroupHourlyByDay(weatherData.hourly)
-    : [];
+  const days = useGroupHourlyByDay(weatherData?.hourly);
 
   return (
     <div className="m-auto px-[16px] md:px-[20px] max-w-[1300px]">

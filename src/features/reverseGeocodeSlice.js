@@ -11,10 +11,10 @@ export const reverseGeoCodeSlice = createSlice({
   reducers: {
     setLocationName: (state, action) => {
       const { cityState, city, country, name } = action.payload;
-      state.name = name ?? city;
-      state.cityState = cityState;
-      state.city = city;
-      state.country = country;
+      state.name = name ?? city ?? "";
+      state.cityState = cityState ?? "";
+      state.city = city ?? "";
+      state.country = country ?? "";
     },
   },
 });
