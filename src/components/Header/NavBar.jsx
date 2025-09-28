@@ -59,7 +59,7 @@ export default function NavBar() {
             <div>
               <Button
 
-              onClick={() => setMetric(!isMetric)}
+              onClick={() => {setMetric(!isMetric); setDialogOpen(false)}}
                 text={isMetric ? "Switch to imperial" : "Switch to metric"}
               ></Button>
             </div>
@@ -72,12 +72,12 @@ export default function NavBar() {
                 <Button
                   text={`Celsius(${celsiusSym})`}
                   isActive={tempUnit === "celsius" }
-                  onClick={()=> dispatch(selectTempUnit('celsius'))}
+                  onClick={()=> {dispatch(selectTempUnit('celsius')); setDialogOpen(false)}}
                 ></Button>
                 <Button
                   text={`Fahrenheit(${fahrenheitsym})`}
                   isActive={tempUnit === "fahrenheit" }
-                  onClick={()=> dispatch(selectTempUnit('fahrenheit'))}
+                  onClick={()=> {dispatch(selectTempUnit('fahrenheit')); setDialogOpen(false)}}
                 ></Button>
               </div>
             </div>
@@ -90,12 +90,12 @@ export default function NavBar() {
                 <Button
                   text={"km/h"}
                   isActive={windUnit === "kmh" }
-                  onClick={()=> dispatch(selectWindUnit('kmh'))}
+                  onClick={()=> {dispatch(selectWindUnit('kmh')); setDialogOpen(false)}}
                 ></Button>
                 <Button
                   text={"mph"}
                   isActive={windUnit === "mph" }
-                  onClick={()=> dispatch(selectWindUnit('mph'))}
+                  onClick={()=> {dispatch(selectWindUnit('mph')); setDialogOpen(false)}}
                 ></Button>
               </div>
             </div>
@@ -108,12 +108,12 @@ export default function NavBar() {
                 <Button
                   text={"Millimeter(mm)"}
                   isActive={precipitationUnit === "mm" }
-                    onClick={()=> dispatch(selectPrecipitationUnit('mm'))}
+                    onClick={()=> {dispatch(selectPrecipitationUnit('mm')); setDialogOpen(false)}}
                 ></Button>
                 <Button
                   text={"Inches(in)"}
                   isActive={precipitationUnit === "inch" }
-                  onClick={()=> dispatch(selectPrecipitationUnit('inch'))}
+                  onClick={()=> {dispatch(selectPrecipitationUnit('inch')); setDialogOpen(false)}}
                 ></Button>
               </div>
             </div>
