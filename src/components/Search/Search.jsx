@@ -17,7 +17,7 @@ export default function Search({
   } = useForm();
 
   function onSubmit(data) {
-    setSearch(data.search);
+    setSearch(data.search.trim());
   }
 
   return (
@@ -36,7 +36,7 @@ export default function Search({
               type="text"
               placeholder={`Enter city name`}
               {...register("search", { required: "We need a value here" })}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value.trim())}
             />
           </div>
           <button
@@ -57,9 +57,9 @@ export default function Search({
           <div className="z-50 absolute bg-neutral-800 shadow-neutral-950 shadow-xl mx-5 mt-3 p-2 rounded-2xl md:w-[415px] text-neutral-100">
             <ul>
               {isLoading || (search.length > 0 && search.length < 2) ? (
-                <li className="hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] cursor-pointer">Loading..</li>
+                <li className="hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] w-full cursor-pointer">Loading..</li>
               ) : !searchData.results ? (
-                <li className="hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] cursor-pointer">Not Found</li>
+                <li className="hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] w-full cursor-pointer">Not Found</li>
               ) : (
                 searchData?.results &&
                 searchData?.results?.map((loc) => (
@@ -69,7 +69,7 @@ export default function Search({
                       setSelectedLocation(loc);
                       setSearch("");
                     }}
-                    className="flex justify-between items-center-safe hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] cursor-pointer"
+                    className="flex justify-between items-center-safe hover:bg-neutral-600 my-1 px-4 py-2 rounded-[7px] w-full cursor-pointer"
                   >
                     <h2>
                       {loc.name}, {loc.country}{" "}
